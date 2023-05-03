@@ -39,7 +39,7 @@ function menu() {
 //creo la función para que el usuario pueda Elegir el tipo de Service para cada cliente
 
 function Service() {
-    let opcionDeService = parseInt(prompt("Seleccione el número de tipo de Service a Agendar \n 1) Alineación y Balanceo \n 2) Service Anual \n 3) Evaluacion de Siniestro"));
+    let opcionDeService = parseInt(prompt("Seleccione el número de tipo de Service a Agendar \n 1) Alineación y Balanceo \n 2) Service Anual \n 3) Evaluacion de Siniestro \n 4) Salir"));
 
     switch (opcionDeService) {
         case 1:
@@ -50,6 +50,9 @@ function Service() {
             break;
         case 3:
             opcionDeService = "EvaluacionDeDanios";
+            break;
+        case 4:
+            salir();
             break;
         default:
             console.log("por favor ingrese tipo de Service correcto");
@@ -65,14 +68,15 @@ function altaCliente() {
     let nombre = prompt("Ingrese el nombre del cliente:");
     let apellido = prompt(" Ingrese el apellido del cliente:");
     let email = prompt("Ingrese el e-mail del cliente:");
-    let modelo = prompt("Ingrese el modelo de automovil (formato marca y modelo):");
-    let anio = prompt("Ingrese año del automovil (formato AAAA:");
+    let modelo = prompt("Ingrese el modelo de automovil (formato: marca y modelo):");
+    let anio = prompt("Ingrese año del automovil (formato: AAAA): ");
     let patente = prompt("Ingrese patente del automovil:");
     let serviceElegido = Service();
     let cliente = new Cliente(nombre, apellido, email, modelo, anio, patente, serviceElegido);
     arrayCliente.push(cliente);
     console.log(arrayCliente);
 }
+
 
 function bajaCliente() {
     let patente = prompt("ingrese número de Patente: ");
@@ -83,10 +87,16 @@ function bajaCliente() {
     console.log(clienteEliminado);
 }
 
+
 function buscarCliente() {
     let patente = prompt("ingrese número de Patente: ");
     let cliente = arrayCliente.find(cliente => cliente.patente === patente);
     console.log(cliente);
+}
+
+
+function salir() {
+    alert("Ha cerrado correctamente el agendador de Servicios, muchas gracias!");
 }
 
 //Inicio el Programa
@@ -102,8 +112,11 @@ switch (opciones) {
     case 3:
         buscarCliente();
         break;
+    case 4:
+        salir();
+        break;
+
 
     default:
         console.log("Por favor ingrese una opción del menú");
-
 }
