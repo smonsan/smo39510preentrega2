@@ -1,0 +1,30 @@
+.principalScreen {background: hsla(340, 3%, 77%, 1);
+
+    background: linear-gradient(90deg, hsla(340, 3%, 77%, 1) 0%, hsla(0, 0%, 100%, 1) 100%);
+    
+    background: -moz-linear-gradient(90deg, hsla(340, 3%, 77%, 1) 0%, hsla(0, 0%, 100%, 1) 100%);
+    
+    background: -webkit-linear-gradient(90deg, hsla(340, 3%, 77%, 1) 0%, hsla(0, 0%, 100%, 1) 100%);
+    
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#C5C2C3", endColorstr="#FEFEFE", GradientType=1 );
+}
+
+.cajaServicios {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.imgImagenServicio {
+    width: 300px;
+    height: 300px;
+    object-fit: contain;
+    margin-top: 1rem;
+
+}
+
+
+.card {
+    display: flex;
+   align-items: center;
+   margin:0.5rem;
+}

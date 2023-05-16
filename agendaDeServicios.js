@@ -1,122 +1,182 @@
-//Creo la clase constructora para la creación de clientes y selección de servicio
+//creo la clase para construir los servicios a ofrecer
 
-class Cliente {
-    constructor(nombre, apellido, email, modelo, anio, patente, serviceElegido) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.email = email;
-        this.modelo = modelo;
-        this.anio = anio;
-        this.patente = patente;
-        this.serviceElegido = serviceElegido;
+class Servicio {
+    constructor(id, tipoDeServicio, preciodeServicio, img) {
+        this.id = id;
+        this.tipoDeServicio = tipoDeServicio;
+        this.preciodeServicio = preciodeServicio;
+        this.img = img;
+        this.cantidad = 1;
     }
 }
 
-const clientePedro = new Cliente("Pedro", "Campos", "pedro.campos@prueba.com", "Ford Ka", 2016, "AA308UX", "alineacionYBalanceo");
-const clienteFrancisco = new Cliente("Francisco", "De la Torre", "francisco.delatorre@prueba.com", "Ford Fiesta", 2017, "AB234EF", "evaluacionDeDanos");
-const clientePablo = new Cliente("Pablo", "Gomez", "pablo.gomez@prueba.com", "Ford Kuga", 2020, "AE101DS", "serviceAnual");
-
-// creo un array vacio donde se alojaran los clientes creados
-
-const arrayCliente = [];
-
-arrayCliente.push(clientePedro);
-arrayCliente.push(clienteFrancisco);
-arrayCliente.push(clientePablo);
-
-console.log(arrayCliente);
+const cambioDeAceite = new Servicio(1, "Cambio de Aceite y Filtro", 22900, "img/cambio-de-aceite-2.jpg");
+const cambioDePastillasDeFrenos = new Servicio(2, "Cambio de Pastillas de Frenos", 20900, "img/cambio-de-frenos.avif");
+const alineacionYBalanceo = new Servicio(3, "Alineación y Balanceo", 8900, "img/alineacion-balanceo.avif");
+const rotacionDeNeumaticos = new Servicio(4, " Rotación de Neumaticos", 4490, "img/rotacion-neumaticos-1.jpg");
+const inspeccionComputarizada = new Servicio(5, "Inspección Integral por Computadora", 15499, "img/revision-integral.jpg");
+const serviceAnual15MKm = new Servicio(6, "Service Anual de 15 mil Km", 47900, "img/revision-integral-siniestro.jpg");
 
 
-//Creo la función menú
+//creo el array de mis Servicios
 
-function menu() {
-    alert("Acceso a la Agenda de Servicios de Concesionaria Ford");
-    let opcion = parseInt(prompt("Ingrese el numero de opción: \n 1) Alta de Cliente \n 2) Baja de Cliente \n 3) Buscar Cliente \n 4) Salir"));
-    return opcion;
+const servicios = [cambioDeAceite, cambioDePastillasDeFrenos, alineacionYBalanceo, rotacionDeNeumaticos, inspeccionComputarizada, serviceAnual15MKm];
+
+
+//creo el array para el carrito de Servicios
+
+let carritoDeServicios = [];
+
+
+//cargo el carrito desde localStorage
+//si hay items cargados en el local storage, me lo agrega al carrito
+
+if(localStorage.getItem("carritoDeServicios")) {
+    carritoDeServicios = JSON.parse(localStorage.getItem("carritoDeServicios"));
 }
 
 
-//creo la función para que el usuario pueda Elegir el tipo de Service para cada cliente
 
-function Service() {
-    let opcionDeService = parseInt(prompt("Seleccione el número de tipo de Service a Agendar \n 1) Alineación y Balanceo \n 2) Service Anual \n 3) Evaluacion de Siniestro \n 4) Salir"));
+//creo el contenedor para mis cards de servicios
 
-    switch (opcionDeService) {
-        case 1:
-            opcionDeService = "alineacionYBalanceo";
-            break;
-        case 2:
-            opcionDeService = "serviceAnual";
-            break;
-        case 3:
-            opcionDeService = "EvaluacionDeDanios";
-            break;
-        case 4:
-            salir();
-            break;
-        default:
-            console.log("por favor ingrese tipo de Service correcto");
+const contenedorDeServicios = document.getElementById("contenedorDeServicios");
 
+
+//funcion para crear mis cards de Servicios
+
+const mostrarServicio = () => {
+    servicios.forEach(servicio => {
+        const card = document.createElement("div");
+        card.classList.add("text-center", "col-xl-3", "col-md-6", "col-xs-12");
+        card.innerHTML = `
+                <div class="card"> 
+                    <img class="card-img-top imgImagenServicio img-fluid" src="${servicio.img}" alt="${servicio.tipoDeServicio}">
+                    <div class="card-body">
+                         <h3>${servicio.tipoDeServicio}</h3>
+                         <p>$${servicio.preciodeServicio}</p>
+                        <button class="btn btn-primary" id="boton${servicio.id}">Agregar al Carrito</button>
+                    </div>
+                </div>`;
+        contenedorDeServicios.appendChild(card);
+
+        // Agregar servicios al carrito
+        const boton = document.getElementById(`boton${servicio.id}`);
+        boton.addEventListener("click", () => {
+            agregarACarrito(servicio.id);
+
+            //pruebo desactivar boton de producto elegido
+            boton.disabled = true;
+            boton.styleopacity = 0.95;
+        })
+    })
+}
+
+mostrarServicio();
+
+
+//funcion para agregar al Carrito
+
+const agregarACarrito = (id) => {
+    const servicioEnCarrito = carritoDeServicios.find(servicio => servicio.id === id);
+    if (servicioEnCarrito) {
+        servicioEnCarrito.cantidad++;
+    } else {
+        const servicio = servicios.find(servicio => servicio.id === id);
+        carritoDeServicios.push(servicio);
     }
-    return opcionDeService;
+        //actualizo el carrito trabajando el local storage
+        localStorage.setItem("carritoDeServicios",JSON.stringify(carritoDeServicios));
+}
+
+const verCarrito = document.getElementById("verCarrito");
+verCarrito.addEventListener("click", () => {
+    mostrarCarrito();
+})
+
+
+//creo la funcion para mostrar el carrito
+
+const mostrarCarrito = () => {
+    contenedorCarrito.innerHTML = "";
+    carritoDeServicios.forEach(servicio => {
+        const card = document.createElement("div");
+        card.classList.add("text-center", "col-xl-3", "col-md-6", "col-xs-12");
+        card.innerHTML = `
+                    <div class="card"> 
+                        <img class="card-img-top imgImagenServicio img-fluid" src="${servicio.img}" alt="${servicio.tipoDeServicio}">
+                        <div class="card-body">
+                            <h3>${servicio.tipoDeServicio}</h3>
+                            <p>$${servicio.preciodeServicio}</p>
+                            <p>cantidad Seleccionada ${servicio.cantidad}</p>
+                            <button class="btn btn-primary" id="eliminar${servicio.id}">Eliminar del Carrito</button>
+                        </div>
+                    </div>`;
+        contenedorCarrito.appendChild(card);
+
+
+        //Elimino servicios del array Carrito
+        const botonEliminarServicio = document.getElementById(`eliminar${servicio.id}`);
+        botonEliminarServicio.onclick=() => {
+            eliminarServicio(servicio.id);
+            
+            //pruebo reactivar boton de producto elegido si lo elimino del carrito
+            const boton = document.getElementById(`boton${servicio.id}`);
+            boton.disabled = false;
+            boton.styleopacity = 0;         
+}
+    })
+    calculodelTotal();
 }
 
 
-//funciones para las opciones del menu
+//Funcion para eliminar productos del Carrito
 
-function altaCliente() {
-    let nombre = prompt("Ingrese el nombre del cliente:");
-    let apellido = prompt(" Ingrese el apellido del cliente:");
-    let email = prompt("Ingrese el e-mail del cliente:");
-    let modelo = prompt("Ingrese el modelo de automovil (formato: marca y modelo):");
-    let anio = prompt("Ingrese año del automovil (formato: AAAA): ");
-    let patente = prompt("Ingrese patente del automovil:");
-    let serviceElegido = Service();
-    let cliente = new Cliente(nombre, apellido, email, modelo, anio, patente, serviceElegido);
-    arrayCliente.push(cliente);
-    console.log(arrayCliente);
+const eliminarServicio = (id) => {
+    const servicio= carritoDeServicios.find(servicio =>servicio.id===id);
+    let indiceServicio = carritoDeServicios.indexOf(servicio);
+    carritoDeServicios.splice(indiceServicio,1);
+   
+    mostrarCarrito();
+
+    //Actualizo el local Storage
+    localStorage.setItem("carritoDeServicios", JSON.stringify(carritoDeServicios));
 }
 
 
-function bajaCliente() {
-    let patente = prompt("ingrese número de Patente: ");
-    let cliente = arrayCliente.find(cliente => cliente.patente === patente);
-    let eliminarCliente = arrayCliente.indexOf(cliente);
-    let clienteEliminado = arrayCliente.splice(eliminarCliente, 1);
-    console.log("Ha eliminado al cliente:");
-    console.log(clienteEliminado);
+//Vaciamos el carrito
+const vaciarElCarrito = document.getElementById("vaciarElCarrito");
+vaciarElCarrito.addEventListener("click", () => {
+    eliminarCarrito ();
+})
+
+
+//funcion para eliminar  todo el carrito
+
+const eliminarCarrito = () => {
+    carritoDeServicios = [];
+
+    //Actualizo el local Storage
+    localStorage.clear();
+    mostrarCarrito ();
 }
 
 
-function buscarCliente() {
-    let patente = prompt("ingrese número de Patente: ");
-    let cliente = arrayCliente.find(cliente => cliente.patente === patente);
-    console.log(cliente);
+//funcion para calcular el total del presupuesto
+const totalPresupuesto = document.getElementById("totalPresupuesto");
+
+const calculodelTotal = () => {
+    let montoTotal = 0;
+    carritoDeServicios.forEach(servicio => {
+        montoTotal +=servicio.preciodeServicio * servicio.cantidad;
+
+    })
+    totalPresupuesto.innerHTML = `Total: $${montoTotal}`;
+    console.log (totalPresupuesto);
 }
 
 
-function salir() {
-    alert("Ha cerrado correctamente el agendador de Servicios, muchas gracias!");
-}
+/* const finalizarYAgendar = document.getElementById("finalizarYAgendar");
 
-//Inicio el Programa
-
-let opciones = menu();
-switch (opciones) {
-    case 1:
-        altaCliente();
-        break;
-    case 2:
-        bajaCliente();
-        break;
-    case 3:
-        buscarCliente();
-        break;
-    case 4:
-        salir();
-        break;
-
-
-    default:
-        console.log("Por favor ingrese una opción del menú");
-}
+finalizarYAgendar = () => {
+    
+} */
