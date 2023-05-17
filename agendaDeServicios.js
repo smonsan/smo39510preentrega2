@@ -100,7 +100,6 @@ const mostrarCarrito = () => {
     contenedorCarrito.innerHTML = "";
     carritoDeServicios.forEach(servicio => {
         const modal = document.createElement("div");
-        //modal.classList.add("text-center");
         modal.innerHTML = `
                         <div class= "container-fluid"> 
                             <div class= "row row-cols-3">
@@ -179,8 +178,22 @@ const calculodelTotal = () => {
 }
 
 
-/* const finalizarYAgendar = document.getElementById("finalizarYAgendar");
+const loguearseYFinalizar = document.getElementById("finalizar");
 
-finalizarYAgendar = () => {
-    
-} */
+
+loguearseYFinalizar.addEventListener("click", () => {
+    Swal.fire({
+  title: "Ingrese su email",
+  input: "email",
+  showCancelButton: true,
+  confirmButtonText: "Agendar",
+    }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        title: "Gracias por Agendar su visita",
+        icon: "success",
+        confirmButtonText: "Aceptar"
+    })
+    }   
+})
+})
