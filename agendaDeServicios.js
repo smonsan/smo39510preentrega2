@@ -175,6 +175,15 @@ const calculodelTotal = () => {
 }
 
 
+//probando con sweet alert
+const botonSwal = document.getElementById("botonSwal");
+
+botonSwal.addEventListener("click", () => {
+    Swal.fire ({
+        
+    })
+})
+
 /* const finalizarYAgendar = document.getElementById("finalizarYAgendar");
 
 finalizarYAgendar = () => {
