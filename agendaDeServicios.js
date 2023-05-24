@@ -18,12 +18,12 @@ const inspeccionComputarizada = new Servicio(5, "Inspección Integral por Comput
 const serviceAnual15MKm = new Servicio(6, "Service Anual de 15 mil Km", 47900, "img/revision-integral-siniestro.jpg");
 
 
-//creo el array de mis Servicios
+//Declaro el array con mis Servicios
 
 const servicios = [cambioDeAceite, cambioDePastillasDeFrenos, alineacionYBalanceo, rotacionDeNeumaticos, inspeccionComputarizada, serviceAnual15MKm];
 
 
-//creo el array para el carrito de Servicios
+//Declaro el array para el carrito de compras de Servicios
 
 let carritoDeServicios = [];
 
@@ -42,7 +42,7 @@ if(localStorage.getItem("carritoDeServicios")) {
 const contenedorDeServicios = document.getElementById("contenedorDeServicios");
 
 
-//funcion para crear mis cards de Servicios
+//Creo la Función para renderizar mis cards de Servicios
 
 const mostrarServicio = () => {
     servicios.forEach(servicio => {
@@ -64,7 +64,7 @@ const mostrarServicio = () => {
         boton.addEventListener("click", () => {
             agregarACarrito(servicio.id);
 
-            //pruebo desactivar boton de producto elegido
+            //una vez seleccionado el boton se desactiva
             boton.disabled = true;
             boton.styleopacity = 0.95;
         })
@@ -74,7 +74,7 @@ const mostrarServicio = () => {
 mostrarServicio();
 
 
-//funcion para agregar al Carrito
+//Funcion para agregar al Carrito
 
 const agregarACarrito = (id) => {
     const servicioEnCarrito = carritoDeServicios.find(servicio => servicio.id === id);
@@ -99,19 +99,22 @@ verCarrito.addEventListener("click", () => {
 const mostrarCarrito = () => {
     contenedorCarrito.innerHTML = "";
     carritoDeServicios.forEach(servicio => {
-        const card = document.createElement("div");
-        card.classList.add("text-center", "col-xl-3", "col-md-6", "col-xs-12");
-        card.innerHTML = `
-                    <div class="card"> 
-                        <img class="card-img-top imgImagenServicio img-fluid" src="${servicio.img}" alt="${servicio.tipoDeServicio}">
-                        <div class="card-body">
-                            <h3>${servicio.tipoDeServicio}</h3>
-                            <p>$${servicio.preciodeServicio}</p>
-                            <p>cantidad Seleccionada ${servicio.cantidad}</p>
-                            <button class="btn btn-primary" id="eliminar${servicio.id}">Eliminar del Carrito</button>
-                        </div>
-                    </div>`;
-        contenedorCarrito.appendChild(card);
+        const modal = document.createElement("div");
+        modal.innerHTML = `
+                        <div class= "container-fluid"> 
+                            <div class= "row row-cols-3">
+                                <div clas= "col">
+                                    <p>${servicio.tipoDeServicio}</p>
+                                </div>
+                                <div clas= "col">  
+                                     <p>$${servicio.preciodeServicio}</p>
+                                </div>
+                                <div clas= "col">
+                                    <button class="btn btn-primary" id="eliminar${servicio.id}">Eliminar</button>
+                                </div>
+                            </div>
+                        </div>`
+        contenedorCarrito.appendChild(modal);
 
 
         //Elimino servicios del array Carrito
@@ -119,7 +122,7 @@ const mostrarCarrito = () => {
         botonEliminarServicio.onclick=() => {
             eliminarServicio(servicio.id);
             
-            //pruebo reactivar boton de producto elegido si lo elimino del carrito
+            //Reactivo boton de los Servicios que elimino del carrito
             const boton = document.getElementById(`boton${servicio.id}`);
             boton.disabled = false;
             boton.styleopacity = 0;         
@@ -175,17 +178,22 @@ const calculodelTotal = () => {
 }
 
 
-//probando con sweet alert
-const botonSwal = document.getElementById("botonSwal");
+const loguearseYFinalizar = document.getElementById("finalizar");
 
-botonSwal.addEventListener("click", () => {
-    Swal.fire ({
-        
+
+loguearseYFinalizar.addEventListener("click", () => {
+    Swal.fire({
+  title: "Ingrese su email",
+  input: "email",
+  showCancelButton: true,
+  confirmButtonText: "Agendar",
+    }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        title: "Gracias por Agendar su visita",
+        icon: "success",
+        confirmButtonText: "Aceptar"
     })
+    }   
 })
-
-/* const finalizarYAgendar = document.getElementById("finalizarYAgendar");
-
-finalizarYAgendar = () => {
-    
-} */
+})
