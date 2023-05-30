@@ -41,3 +41,10 @@ h1 {
 .btn-success {
     margin: 2rem;
 }
+
+.botonEliminar {
+    background-color:#ffff ;
+    color:crimson;
+    font-size: 20px;
+    border: none;
+}

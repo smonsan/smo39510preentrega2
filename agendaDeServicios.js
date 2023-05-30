@@ -111,7 +111,7 @@ const mostrarCarrito = () => {
                                      <p>$${servicio.preciodeServicio}</p>
                                 </div>
                                 <div clas= "col">
-                                    <button class="btn btn-primary" id="eliminar${servicio.id}">Eliminar</button>
+                                    <button class="btn btn-primary botonEliminar" id="eliminar${servicio.id}"><i class="fa-solid fa-trash-can fa-sm"></i></button>
                                 </div>
                             </div>
                         </div>`
