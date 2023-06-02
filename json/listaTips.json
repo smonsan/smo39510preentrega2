@@ -1,0 +1,10 @@
+[
+    {"id":1, "tipoDeMantenimiento": "Aceite del Motor", "tip":"Cambia regularmente el aceite y el filtro de aceite según las recomendaciones del fabricante. El aceite limpio y de calidad ayuda a mantener el motor en buen estado."},
+    {"id":2, "tipoDeMantenimiento":"Lavado del vehiculo", "tip": "Lava regularmente el exterior del automóvil para proteger la pintura de la corrosión y los daños causados por los contaminantes."},
+    {"id":3, "tipoDeMantenimiento": "Frenos", "tip": "Mantener una distancia segura entre tu automóvil y otros vehículos te ayudará a evitar colisiones y reducir el desgaste prematuro de los frenos."},
+    {"id":4, "tipoDeMantenimiento": "Neumaticos", "tip":  "Los neumáticos con la presión adecuada duran más y mejoran la eficiencia del combustible.Revisa regularmente la presión de los neumáticos y ajústala según las recomendaciones del fabricante."},
+    {"id":5, "tipoDeMantenimiento":"Rotación y Balanceo", "tip":"Realizar la rotación y balanceo de los neumaticos de vehiculo ayudará al buen funcionamiento del tren delantero"},
+    {"id":6, "tipoDeMantenimiento":"Programa Ford Assistance", "tip":"Durante el periodo de garantia cuenta con un servicio de asistencia integral las 24 hs y los 365 dias del año"},
+    {"id":7, "tipoDeMantenimiento":"Revision de Liquidos", "tip":"Revisar periodicamente y mantener el nivel del liquido refrigerante y anticongelante ayudará a que su vehiculo no sufra durante periodos de altas o bajas temperaturas"}
+    
+]

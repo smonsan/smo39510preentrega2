@@ -48,3 +48,18 @@ h1 {
     font-size: 20px;
     border: none;
 }
+
+
+#resultado {
+    margin: 3rem;
+    border: white solid;
+    border-radius: 16px;
+    height: 100px;
+    background-color:darkgray;
+}
+
+
+#mostrarBtn{
+    border-radius: 5px;
+    color:blue;
+}

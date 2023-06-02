@@ -1,8 +1,0 @@
-[
-    {"id":1, "tipoDeServicio":"Cambio de Aceite y Filtro", "preciodeServicio": 22900, "img": "img/cambio-de-aceite-2.jpg", "cantidad":1},
-    {"id":2, "tipoDeServicio": "Cambio de Pastillas de Frenos", "preciodeServicio": 20900, "img": "img/cambio-de-frenos.avif","cantidad":1},
-    {"id":3, "tipoDeServicio": "Alineación y Balanceo", "preciodeServicio": 8900, "img": "img/alineacion-balanceo.avif","cantidad":1},
-    {"id": 4, "tipoDeServicio": " Rotación de Neumaticos", "preciodeServicio": 4490, "img": "img/rotacion-neumaticos-1.jpg","cantidad":1},
-    {"id": 5, "tipoDeServicio": "Inspección Integral por Computadora", "preciodeServicio": 15499, "img": "img/revision-integral.jpg","cantidad":1},
-    {"id": 6, "tipoDeServicio": "Service Anual de 15 mil Km", "preciodeServicio": 47900, "img": "img/revision-integral-siniestro.jpg","cantidad":1}
-]

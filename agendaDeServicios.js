@@ -205,3 +205,47 @@ loguearseYFinalizar.addEventListener("click", () => {
 })
 eliminarCarrito ();
 })
+
+
+
+//cargo la lista de TIPS desde el fetch
+
+const listaDeTips = "json/listaTips.json";
+
+   // Obtener referencia al botón y al elemento donde se mostrará la propiedad
+  const mostrarBtn = document.getElementById("mostrarBtn");
+  let resultado = document.getElementById("resultado");
+  
+  // Variable para almacenar el índice del objeto actual
+  let indiceObjetoActual = 0;
+  
+
+  // Agregar un evento clic al botón
+  mostrarBtn.addEventListener("click", function() {
+
+    fetch (listaDeTips)
+    .then (respuesta => respuesta.json())
+    .then (datos => {
+        console.log (datos);
+    // Obtener el objeto actual
+    let objetoActual = datos[indiceObjetoActual];
+  
+    // Limpiar el contenido previo
+    resultado.innerHTML = "";
+  
+    // Crear un elemento de lista y asignarle la propiedad como texto
+    let p = document.createElement("p");
+    p.textContent = objetoActual.tip;
+  
+    // Agregar el elemento de lista al resultado
+    resultado.appendChild(p);
+  
+    // Incrementar el índice del objeto actual
+    indiceObjetoActual++;
+  
+    // Verificar si se ha alcanzado el final del array y volver al inicio
+    if (indiceObjetoActual >= datos.length) {
+      indiceObjetoActual = 0;
+    }
+  });
+})
