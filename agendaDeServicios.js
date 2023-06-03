@@ -31,7 +31,7 @@ let carritoDeServicios = [];
 //cargo el carrito desde localStorage
 //si hay items cargados en el local storage, me lo agrega al carrito
 
-if(localStorage.getItem("carritoDeServicios")) {
+if (localStorage.getItem("carritoDeServicios")) {
     carritoDeServicios = JSON.parse(localStorage.getItem("carritoDeServicios"));
 }
 
@@ -68,7 +68,7 @@ const mostrarServicio = () => {
             boton.styleopacity = 0.95;
         })
     })
-   
+
 }
 
 mostrarServicio();
@@ -85,8 +85,8 @@ const agregarACarrito = (id) => {
         const servicio = servicios.find(servicio => servicio.id === id);
         carritoDeServicios.push(servicio);
     }
-        //actualizo el carrito trabajando el local storage
-        localStorage.setItem("carritoDeServicios",JSON.stringify(carritoDeServicios));
+    //actualizo el carrito trabajando el local storage
+    localStorage.setItem("carritoDeServicios", JSON.stringify(carritoDeServicios));
 }
 
 const verCarrito = document.getElementById("verCarrito");
@@ -120,14 +120,14 @@ const mostrarCarrito = () => {
 
         //Elimino servicios del array Carrito
         const botonEliminarServicio = document.getElementById(`eliminar${servicio.id}`);
-        botonEliminarServicio.onclick=() => {
+        botonEliminarServicio.onclick = () => {
             eliminarServicio(servicio.id);
-            
+
             //Reactivo boton de los Servicios que elimino del carrito
             const boton = document.getElementById(`boton${servicio.id}`);
             boton.disabled = false;
-            boton.styleopacity = 0;         
-}
+            boton.styleopacity = 0;
+        }
     })
     calculodelTotal();
 }
@@ -136,10 +136,10 @@ const mostrarCarrito = () => {
 //Funcion para eliminar productos del Carrito
 
 const eliminarServicio = (id) => {
-    const servicio= carritoDeServicios.find(servicio =>servicio.id===id);
+    const servicio = carritoDeServicios.find(servicio => servicio.id === id);
     let indiceServicio = carritoDeServicios.indexOf(servicio);
-    carritoDeServicios.splice(indiceServicio,1);
-   
+    carritoDeServicios.splice(indiceServicio, 1);
+
     mostrarCarrito();
 
     //Actualizo el local Storage
@@ -151,7 +151,7 @@ const eliminarServicio = (id) => {
 const vaciarElCarrito = document.getElementById("vaciarElCarrito");
 
 vaciarElCarrito.addEventListener("click", () => {
-    eliminarCarrito ();
+    eliminarCarrito();
 })
 
 
@@ -159,15 +159,15 @@ vaciarElCarrito.addEventListener("click", () => {
 
 const eliminarCarrito = () => {
     carritoDeServicios = [];
-    botonServicios.forEach (boton => {
+    botonServicios.forEach(boton => {
         boton.disabled = false;
-        boton.styleopacity= 0;
-        });
+        boton.styleopacity = 0;
+    });
 
 
     //Actualizo el local Storage
     localStorage.clear();
-    mostrarCarrito ();
+    mostrarCarrito();
 }
 
 
@@ -177,11 +177,11 @@ const totalPresupuesto = document.getElementById("totalPresupuesto");
 const calculodelTotal = () => {
     let montoTotal = 0;
     carritoDeServicios.forEach(servicio => {
-        montoTotal +=servicio.preciodeServicio * servicio.cantidad;
+        montoTotal += servicio.preciodeServicio * servicio.cantidad;
 
     })
     totalPresupuesto.innerHTML = `Total: $${montoTotal}`;
-    console.log (totalPresupuesto);
+    console.log(totalPresupuesto);
 }
 
 
@@ -190,62 +190,63 @@ const loguearseYFinalizar = document.getElementById("finalizar");
 
 loguearseYFinalizar.addEventListener("click", () => {
     Swal.fire({
-  title: "Ingrese su email",
-  input: "email",
-  showCancelButton: true,
-  confirmButtonText: "Agendar",
+        title: "Ingrese su email",
+        input: "email",
+        showCancelButton: true,
+        confirmButtonText: "Agendar",
     }).then((result) => {
-    if (result.isConfirmed) {
-      Swal.fire({
-        title: "Gracias por Agendar su visita",
-        icon: "success",
-        confirmButtonText: "Aceptar"
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: "Gracias por Agendar su visita",
+                icon: "success",
+                confirmButtonText: "Aceptar"
+            })
+        }
     })
-    }   
-})
-eliminarCarrito ();
+    eliminarCarrito();
 })
 
 
 
-//cargo la lista de TIPS desde el fetch
+//creo una constante para almacenar la url de mi array de objetos 
 
 const listaDeTips = "json/listaTips.json";
 
-   // Obtener referencia al botón y al elemento donde se mostrará la propiedad
-  const mostrarBtn = document.getElementById("mostrarBtn");
-  let resultado = document.getElementById("resultado");
-  
-  // Variable para almacenar el índice del objeto actual
-  let indiceObjetoActual = 0;
-  
+// creo la referencia para modificar el dom luego
+const tipsBoton = document.getElementById("tipsBoton");
+let cajaTips = document.getElementById("cajaTips");
 
-  // Agregar un evento clic al botón
-  mostrarBtn.addEventListener("click", function() {
+// Variable para almacenar el índice del objeto actual
+let indiceObjetoActual = 0;
 
-    fetch (listaDeTips)
-    .then (respuesta => respuesta.json())
-    .then (datos => {
-        console.log (datos);
-    // Obtener el objeto actual
-    let objetoActual = datos[indiceObjetoActual];
-  
-    // Limpiar el contenido previo
-    resultado.innerHTML = "";
-  
-    // Crear un elemento de lista y asignarle la propiedad como texto
-    let p = document.createElement("p");
-    p.textContent = objetoActual.tip;
-  
-    // Agregar el elemento de lista al resultado
-    resultado.appendChild(p);
-  
-    // Incrementar el índice del objeto actual
-    indiceObjetoActual++;
-  
-    // Verificar si se ha alcanzado el final del array y volver al inicio
-    if (indiceObjetoActual >= datos.length) {
-      indiceObjetoActual = 0;
-    }
-  });
+
+// cuando apriete el boton se crea el evento
+tipsBoton.addEventListener("click", function () {
+
+    // llamo a la lista de tips desde el fetch
+    fetch(listaDeTips)
+        .then(respuesta => respuesta.json())
+        .then(datos => {
+            console.log(datos);
+            // Obtener el objeto actual
+            let objetoActual = datos[indiceObjetoActual];
+
+            // Limpio el contenido previo
+            cajaTips.innerHTML = "";
+
+            // Creo un elemento y lo modifico con DOM
+            let p = document.createElement("p");
+            p.textContent = objetoActual.tip;
+
+            // Agrego el elemento de lista al resultado
+            cajaTips.appendChild(p);
+
+            // Incremento el índice del objeto actual
+            indiceObjetoActual++;
+
+            // Verifico si se ha alcanzado el final del array y volver al inicio
+            if (indiceObjetoActual >= datos.length) {
+                indiceObjetoActual = 0;
+            }
+        });
 })

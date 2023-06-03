@@ -50,16 +50,22 @@ h1 {
 }
 
 
-#resultado {
+#cajaTips {
     margin: 3rem;
     border: white solid;
     border-radius: 16px;
     height: 100px;
     background-color:darkgray;
+    text-align: center;
+    padding: auto;
 }
 
 
-#mostrarBtn{
+#tipsBoton {
     border-radius: 5px;
     color:blue;
+}
+
+p {
+    padding: 1rem;
 }
